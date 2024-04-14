@@ -24,6 +24,7 @@ Then for the analysis part
 
 import urllib.request
 import json
+import mulliganLib as mLib
 
 def createlinkfromcode(deck_code, lang, mode, valid_input = False):
     sv_format = {'R':'3', 'U':'1','T':'2'}
@@ -90,3 +91,170 @@ deckList = decklist(deckLink)
 Main problem it only features the decklist screen therefore there are no card info text.
 Wait there is!
 '''
+
+#Odds of getting 4 buff at turn 3
+num_draw_1st = 6
+num_draw_2nd = 7
+num_total = 40
+num_1_cost_buff      = 8
+num_1_cost_buff_need = 2
+num_1_cost_buff_max  = num_1_cost_buff
+num_2_cost_buff      = 12
+num_2_cost_buff_need = 2
+num_2_cost_buff_max  = 2
+num_wanted = [num_1_cost_buff, num_2_cost_buff]
+num_needed = [num_1_cost_buff_need, num_2_cost_buff_need]
+num_max = [num_1_cost_buff_max, num_2_cost_buff_max]
+
+###Case 1: draw naturally with 6-7 cards (1st)
+P_natural_1st = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_1st, num_needed, num_max)
+P_natural_2nd = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_2nd, num_needed, num_max)
+#Answer: 1st-15.09%, 2nd-25.02%
+
+###Case 2: I got 2 1cost buff pre-draw
+num_draw_1st = 3
+num_draw_2nd = 4
+num_total = 40
+num_1_cost_buff      = 8 - 2
+num_1_cost_buff_need = 2 - 2
+num_1_cost_buff_max  = num_1_cost_buff 
+num_2_cost_buff      = 12
+num_2_cost_buff_need = 2
+num_2_cost_buff_max  = num_2_cost_buff
+num_wanted = [num_1_cost_buff, num_2_cost_buff]
+num_needed = [num_1_cost_buff_need, num_2_cost_buff_need]
+num_max = [num_1_cost_buff_max, num_2_cost_buff_max]
+
+P_natural_1st = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_1st, num_needed, num_max)
+P_natural_2nd = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_2nd, num_needed, num_max)
+#Answer: 1st-20.93%, 2nd-34.58%
+
+
+
+###Case 2: I got 2 2cost buff pre-draw
+num_draw_1st = 3
+num_draw_2nd = 4
+num_total = 40
+num_1_cost_buff      = 8 
+num_1_cost_buff_need = 2 
+num_1_cost_buff_max  = num_1_cost_buff
+num_2_cost_buff      = 12 - 2
+num_2_cost_buff_need = 2 - 2
+num_2_cost_buff_max  = num_2_cost_buff
+num_wanted = [num_1_cost_buff, num_2_cost_buff]
+num_needed = [num_1_cost_buff_need, num_2_cost_buff_need]
+num_max = [num_1_cost_buff_max, num_2_cost_buff_max]
+
+P_natural_1st = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_1st, num_needed, num_max)
+P_natural_2nd = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_2nd, num_needed, num_max)
+#Answer: 1st-9.64%, 2nd-17.23%
+
+
+
+###Case 3: I got 1 2cost and 1 1cost buff pre-draw
+num_draw_1st = 3
+num_draw_2nd = 4
+num_total = 40
+num_1_cost_buff      = 8 - 1
+num_1_cost_buff_need = 2 - 1
+num_1_cost_buff_max  = num_1_cost_buff
+num_2_cost_buff      = 12 - 1
+num_2_cost_buff_need = 2 - 1
+num_2_cost_buff_max  = num_2_cost_buff
+num_wanted = [num_1_cost_buff, num_2_cost_buff]
+num_needed = [num_1_cost_buff_need, num_2_cost_buff_need]
+num_max = [num_1_cost_buff_max, num_2_cost_buff_max]
+
+P_natural_1st = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_1st, num_needed, num_max)
+P_natural_2nd = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_2nd, num_needed, num_max)
+#Answer: 1st-23.38%, 2nd-37.24%
+
+
+###Case 3B: I got 1 2cost and 1 1cost buff pre-draw (add 1 1pp buff)
+num_draw_1st = 3
+num_draw_2nd = 4
+num_total = 40
+num_1_cost_buff      = 8 - 1 + 1
+num_1_cost_buff_need = 2 - 1
+num_1_cost_buff_max  = num_1_cost_buff
+num_2_cost_buff      = 12 - 1
+num_2_cost_buff_need = 2 - 1
+num_2_cost_buff_max  = num_2_cost_buff
+num_wanted = [num_1_cost_buff, num_2_cost_buff]
+num_needed = [num_1_cost_buff_need, num_2_cost_buff_need]
+num_max = [num_1_cost_buff_max, num_2_cost_buff_max]
+
+P_natural_1st = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_1st, num_needed, num_max)
+P_natural_2nd = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_2nd, num_needed, num_max)
+#Answer: 1st-26.27%, 2nd-41.21%
+
+###Case 3C: I got 1 2cost and 1 1cost buff pre-draw (add 3 1pp buff)
+num_draw_1st = 3
+num_draw_2nd = 4
+num_total = 40
+num_1_cost_buff      = 8 - 1 + 3
+num_1_cost_buff_need = 2 - 1
+num_1_cost_buff_max  = num_1_cost_buff
+num_2_cost_buff      = 12 - 1
+num_2_cost_buff_need = 2 - 1
+num_2_cost_buff_max  = num_2_cost_buff
+num_wanted = [num_1_cost_buff, num_2_cost_buff]
+num_needed = [num_1_cost_buff_need, num_2_cost_buff_need]
+num_max = [num_1_cost_buff_max, num_2_cost_buff_max]
+
+P_natural_1st = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_1st, num_needed, num_max)
+P_natural_2nd = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_2nd, num_needed, num_max)
+#Answer: 1st-31.73%, 2nd-48.26%
+
+'''
+Conclusion: always aim for a 1 2cost/1cost
+'''
+
+###Case 4: I got 2 1cost and 1 2cost buff pre-draw
+num_draw_1st = 3
+num_draw_2nd = 4
+num_total = 40
+num_1_cost_buff      = 8 - 2
+num_1_cost_buff_need = 2 - 2
+num_1_cost_buff_max  = num_1_cost_buff
+num_2_cost_buff      = 12 - 1
+num_2_cost_buff_need = 2 - 1
+num_2_cost_buff_max  = num_2_cost_buff
+num_wanted = [num_1_cost_buff, num_2_cost_buff]
+num_needed = [num_1_cost_buff_need, num_2_cost_buff_need]
+num_max = [num_1_cost_buff_max, num_2_cost_buff_max]
+
+P_natural_1st = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_1st, num_needed, num_max)
+P_natural_2nd = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_2nd, num_needed, num_max)
+#Answer: 1st-63.02%, 2nd-74.01%
+
+###Case 5: I got 1 1cost and 2 2cost buff pre-draw
+num_draw_1st = 3
+num_draw_2nd = 4
+num_total = 40
+num_1_cost_buff      = 8 - 1
+num_1_cost_buff_need = 2 - 1
+num_1_cost_buff_max  = num_1_cost_buff
+num_2_cost_buff      = 12 - 2
+num_2_cost_buff_need = 2 - 2
+num_2_cost_buff_max  = num_2_cost_buff
+num_wanted = [num_1_cost_buff, num_2_cost_buff]
+num_needed = [num_1_cost_buff_need, num_2_cost_buff_need]
+num_max = [num_1_cost_buff_max, num_2_cost_buff_max]
+
+P_natural_1st = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_1st, num_needed, num_max)
+P_natural_2nd = mLib.probability_of_at_least_many_x(num_total, num_wanted, num_draw_2nd, num_needed, num_max)
+#Answer: 1st-44.78%, 2nd-55.22%
+
+
+    #To Generate all permutations of A, B, and C
+    perms = product(range(num_draw+1), repeat=num_types)    
+
+    valid_all_perms = [perm for perm in perms]    
+    
+    # 1st filter is total sum must be num_draw
+    valid_perms = [perm for perm in valid_all_perms if sum(perm) == num_draw]        
+    
+    # 2nd filter is it meets the minimum need requirements
+    for i in range(len(num_need_list)):
+        valid_perms = [perm for perm in valid_perms if perm[i] >= num_need_list[i]]  

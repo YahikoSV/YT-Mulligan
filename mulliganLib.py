@@ -12,7 +12,6 @@ def probability_of_at_least_x(num_total, num_wanted, num_needed = 1, num_draw = 
     comb_want  = 0
     for i in range(0,num_max_needed - num_needed + 1):
         x = comb(num_wanted, num_needed + i) * comb(num_total - num_wanted, num_draw - num_needed - i)
-        print(i,x)
         comb_want = comb_want + x
         
     return comb_want, comb_total, comb_want / comb_total
