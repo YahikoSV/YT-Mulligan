@@ -317,9 +317,10 @@ Nice time to make a function for this.
 rate_win = 0.03
 num_pulls = 400
 num_wins = 6 
-list_markers = [.01,.25,.50,.75,.99,.98]
+list_markers_prob = [.01,.25,.50,.75,.99,.98]
+list_markers_pull = [50]
 
-def graph_probability_of_winning_x_with_y_pulls(rate_win,num_pulls,num_wins,list_markers):
+def graph_probability_of_winning_x_with_y_pulls(rate_win,num_pulls,num_wins,list_markers_prob,list_markers_pull):
     rate_lose = 1 - rate_win
     colors = ['b','g','r','c','m','y']
     
@@ -334,17 +335,23 @@ def graph_probability_of_winning_x_with_y_pulls(rate_win,num_pulls,num_wins,list
         list_win_prob.append(win_prob)
         
         
-    plt.title(f'Probability of {str(num_wins)} wins in {str(num_pulls)} pulls') 
+    plt.title(f'Probability of {str(num_wins)} wins in {str(num_pulls)} pulls {round(rate_win*100,2)}%') 
     plt.plot(list_pull_num,list_win_prob, label='probability curve')
     
     
-    for marker in range(0,len(list_markers)):
-        if list_markers[marker] < list_win_prob[-1]:
-            index = list_win_prob.index(next(prob for prob in list_win_prob if prob > list_markers[marker]))
-            plt.hlines(y = list_markers[marker], color = colors[marker], linestyle = '--', lw = .5, xmin=0, xmax=index, label=f'{list_markers[marker]}, {index}') 
-            plt.vlines(x = index , color = colors[marker], linestyle = '--', lw = .5, ymin=0, ymax = list_markers[marker])  
+    for marker in range(0,len(list_markers_prob)):
+        if list_markers_prob[marker] <= list_win_prob[-1]:
+            index = list_win_prob.index(next(prob for prob in list_win_prob if prob > list_markers_prob[marker]))
+            plt.hlines(y = list_markers_prob[marker], color = colors[marker%len(colors)], linestyle = '--', lw = .5, xmin=0, xmax=index, label=f'{list_markers_prob[marker]}, {index}') 
+            plt.vlines(x = index , color = colors[marker%len(colors)], linestyle = '--', lw = .5, ymin=0, ymax = list_markers_prob[marker])  
         
-        
+    for marker in range(0,len(list_markers_pull)):
+        if list_markers_pull[marker] <= num_pulls:
+            prob = list_win_prob[list_markers_pull[marker]]
+            plt.hlines(y = prob, color = colors[(marker+len(list_markers_prob))%len(colors)], linestyle = '--', lw = .5, xmin=0, xmax=list_markers_pull[marker], label=f'{list_markers_pull[marker]}, {round(prob*100,10)}%') 
+            plt.vlines(x = list_markers_pull[marker] , color = colors[(marker+len(list_markers_prob))%len(colors)], linestyle = '--', lw = .5, ymin=0, ymax = prob) 
+            
+            
     plt.xlim(0,)
     plt.ylim(0,1)
     plt.legend(bbox_to_anchor=(1.0, 1), loc='upper left')                
@@ -367,11 +374,43 @@ for pull_num in list_pull_num:
     list_win_prob.append(win_prob)
 
 
-
-
+from math import comb
+import matplotlib.pyplot as plt   
 rate_win = 0.007
 num_pulls = 400
 num_wins = 1 
-list_markers = [.01,.25,.50,.75,.99,.98]
+list_markers_prob = [.01,.25,.50]
+list_markers_pull = [150]
+
+
+#Mahjong Soul
+rate_win = .05
+num_pulls = 100
+num_wins = 1
+list_markers_prob = [.50]
+list_markers_pull = [15]
+
+
+#Mahjong Soul 
+rate_win = .05*.59
+num_pulls = 100
+num_wins = 1
+list_markers_prob = [.50]
+list_markers_pull = [20,25]
+
+
+
+rate_win = 0.03
+num_pulls = 200
+num_wins = 2 
+list_markers_prob = [.01,.25,.50]
+list_markers_pull = [200]
+
+rate_win = 0.007
+num_pulls = 400
+num_wins = 2
+list_markers_prob = [.50]
+list_markers_pull = [10,100,190,200]
+
 
 
