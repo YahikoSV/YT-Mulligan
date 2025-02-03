@@ -413,4 +413,52 @@ list_markers_prob = [.50]
 list_markers_pull = [10,100,190,200]
 
 
+#Blue Archive Fes
+rate_win = 0.00925
+num_pulls = 400
+num_wins = 2
+list_markers_prob = [.50]
+list_markers_pull = [100,200,300,400]
+
+
+#Blue Archive Fes
+rate_win = 0.007
+num_pulls = 400
+num_wins = 1
+list_markers_prob = [.50]
+list_markers_pull = [80,200,300,400]
+
+
+'''
+Next Step: Waht if the gacha has a pity system. Like genshin
+Your first 5 star is 50/50 banner or standard
+While your second is guaranteed.
+'''
+
+no_pity_pool = 1.0
+lose_pity_pool = 0.0
+winner_pool = 0.0
+p = .006
+q = .5
+
+for i in range (1,150):
+    loser  = no_pity_pool * (1.0-p)                                       #no pity
+    purga  = no_pity_pool * p * (1.0-q) + lose_pity_pool * (1.0-p)          #lost 50/50 + stuck in lose_pity pool
+    winner = no_pity_pool * p * q + lose_pity_pool * (p)                  #won 50/50 + escaped lose_pity pool (guar)   
+    
+    #update pools
+    no_pity_pool   = loser
+    lose_pity_pool = purga
+    winner_pool    = winner_pool + winner
+    print(i,round(loser,3),round(purga,3),round(winner,3),round(no_pity_pool,3),round(lose_pity_pool,3),round(winner_pool,3),round(no_pity_pool + lose_pity_pool + winner_pool,3))
+    
+
+''' 
+Dreaded Part to add the HARD Pity 
+Normally 
+
+'''
+
+
+
 
